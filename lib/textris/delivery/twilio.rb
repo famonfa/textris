@@ -3,9 +3,9 @@ module Textris
     class Twilio < Textris::Delivery::Base
       def deliver(to)
         options = {
-          :to   => PhoneFormatter.format(to),
+          :to => PhoneFormatter.format(to),
           :body => message.content
-        }
+      }
 
         if message.twilio_messaging_service_sid
           options[:messaging_service_sid] = message.twilio_messaging_service_sid
@@ -17,7 +17,7 @@ module Textris
           options[:media_url] = message.media_urls
         end
 
-        client.messages.create(options)
+        client.messages.create(to: options[:to], body: options[:body])
       end
 
       private
